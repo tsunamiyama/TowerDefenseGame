@@ -193,6 +193,8 @@ public class TileManager : MonoBehaviour{
                 nextPoint.z = tilePoint.z;
                 if(tileList.Contains(nextPoint)){
                     return false;
+                } else {
+                    tileList.Add(nextPoint);
                 }
                 break;
             case "right":
@@ -200,6 +202,8 @@ public class TileManager : MonoBehaviour{
                 nextPoint.z = tilePoint.z - 7;
                 if(tileList.Contains(nextPoint)){
                     return false;
+                } else {
+                    tileList.Add(nextPoint);
                 }
                 break;
             case "down":
@@ -207,6 +211,8 @@ public class TileManager : MonoBehaviour{
                 nextPoint.z = tilePoint.z;
                 if(tileList.Contains(nextPoint)){
                     return false;
+                } else {
+                    tileList.Add(nextPoint);
                 }
                 break;
             case "left":
@@ -214,6 +220,8 @@ public class TileManager : MonoBehaviour{
                 nextPoint.z = tilePoint.z + 7;
                 if(tileList.Contains(nextPoint)){
                     return false;
+                } else {
+                    tileList.Add(nextPoint);
                 }
                 break;
             default:
