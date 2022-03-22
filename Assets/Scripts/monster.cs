@@ -9,29 +9,11 @@ public class monster : MonoBehaviour
     public int health;
     public int damage;
     public int value;
-    public int monsterWaypointCategory;
     public GameObject monsterMan;
     public List<GameObject> listOfMonsterWaypoints = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start(){
-        //Physics.IgnoreCollision(this.gameObject.GetComponent<BoxCollider>(), this.gameObject.GetComponent<BoxCollider>());
-    }
-    void Awake()
-    {
-        
-    }
-
-    public void getWaypoints(){
-        int counter = 0;
-        while(counter < monsterMan.GetComponent<monsterManager>().wayPoints.Count-1){
-            int temp = monsterMan.GetComponent<monsterManager>().wayPoints[counter].GetComponent<waypoint>().waypointCategory;
-            if(temp == monsterWaypointCategory || temp == 0){
-                listOfMonsterWaypoints.Add(monsterMan.GetComponent<monsterManager>().wayPoints[counter]);
-            }
-            counter++;
-        }
-        currentWaypoint = listOfMonsterWaypoints.Count-1;
     }
 
     // Update is called once per frame
@@ -40,7 +22,7 @@ public class monster : MonoBehaviour
         if(currentWaypoint < 0){
             monsterMan.GetComponent<monsterManager>().startTower.GetComponent<startTower>().updateTowerHealth(damage);
             Destroy(this.gameObject);
-        }else {
+        } else {
             move();
         }
     }
