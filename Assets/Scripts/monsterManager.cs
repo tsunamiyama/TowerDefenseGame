@@ -4,23 +4,15 @@ using UnityEngine;
 
 public class monsterManager : MonoBehaviour
 {
-    public List<List<GameObject>> listOfWaypoints = new List<List<GameObject>>();
+    public List<int> categories = new List<int>();
     public List<GameObject> wayPoints = new List<GameObject>();
-
     public List<GameObject> spawnPoints = new List<GameObject>();
-
+    public List<GameObject> arrowList = new List<GameObject>();
     int monsterNumber;
-
     public GameObject monster;
-
     public GameObject waypointHolder;
-
     public GameObject tileManager;
-
     bool waitingForLevelEnd = false;
-
-    public GameObject nextArrow;
-
     public GameObject startTower;
     
     // Start is called before the first frame update
@@ -35,27 +27,35 @@ public class monsterManager : MonoBehaviour
     void LateUpdate()
     {
         if(this.transform.childCount == 1 && waitingForLevelEnd){
-            nextArrow.SetActive(true);
+            for(int i = 0; i < arrowList.Count; i++){
+                arrowList[i].SetActive(true);
+            }
             waitingForLevelEnd = false;
             monsterNumber = (int)(monsterNumber*2.5);
         }
     }
 
     public void StartRound(){
+        for(int i = 0; i < arrowList.Count; i++){
+            if(arrowList[i] == null){
+                    arrowList.RemoveAt(i);
+                }
+             arrowList[i].SetActive(false);
+        }
         wayPoints = waypointHolder.GetComponent<waypointHolder>().waypoints;
         StartCoroutine(spawnMonster());
     }
 
     IEnumerator spawnMonster(){
         int count = monsterNumber;
-        monster.GetComponent<monster>().monsterWaypointCategory = 1;
-        monster.GetComponent<monster>().getWaypoints();
         while(count > 0){
-            for(int i = 0; i < spawnPoints.Count; i++){
-                if(spawnPoints.Count != 1){
-                    monster.GetComponent<monster>().monsterWaypointCategory = i+1;
-                    monster.GetComponent<monster>().getWaypoints();
+            for(int i = 0; i < arrowList.Count; i++){
+                if(arrowList[i] == null){
+                    arrowList.RemoveAt(i);
                 }
+            }
+            for(int i = 0; i < spawnPoints.Count; i++){
+                monster.GetComponent<monster>().listOfMonsterWaypoints = arrowList[i].GetComponent<expandButton>().currPath;
                 GameObject monsterClone = Instantiate(monster);
                 monsterClone.SetActive(true);
                 monsterClone.transform.parent = gameObject.transform;
@@ -69,7 +69,6 @@ public class monsterManager : MonoBehaviour
             Destroy(spawnPoints[i]);
         }
         spawnPoints.Clear();
-        monster.GetComponent<monster>().listOfMonsterWaypoints.Clear();
         waitingForLevelEnd = true;
     }
 }

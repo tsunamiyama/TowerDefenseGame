@@ -1366,6 +1366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileManager: {fileID: 98548242}
+  waypointManager: {fileID: 2104925121}
+  currPath: []
 --- !u!4 &323694988
 Transform:
   m_ObjectHideFlags: 0
@@ -2100,7 +2102,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556960435}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2167,10 +2169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22af20de98aad7d4a9ff06dba2ae1bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWaypoint: 0
   health: 1
   damage: 1
   value: 10
   monsterMan: {fileID: 1115661472}
+  listOfMonsterWaypoints: []
 --- !u!54 &556960441
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4705,12 +4709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d6c189df200ac45a24e11aba0f2f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  categories: 
   wayPoints: []
   spawnPoints: []
+  arrowList: []
   monster: {fileID: 556960435}
   waypointHolder: {fileID: 2104925121}
   tileManager: {fileID: 98548242}
-  nextArrow: {fileID: 0}
   startTower: {fileID: 1050899495}
 --- !u!1 &1149693738
 GameObject:
@@ -6387,6 +6392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileManager: {fileID: 98548242}
+  waypointManager: {fileID: 2104925121}
+  currPath: []
 --- !u!65 &1538189312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8815,6 +8822,7 @@ MonoBehaviour:
   - {fileID: 1628992052}
   - {fileID: 1149693738}
   - {fileID: 1567735995}
+  firstArrow: {fileID: 1538189309}
   waypoint: {fileID: 902420364}
 --- !u!1 &2122807186
 GameObject:

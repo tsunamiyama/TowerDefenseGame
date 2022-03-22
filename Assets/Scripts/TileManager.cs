@@ -31,7 +31,7 @@ public class TileManager : MonoBehaviour{
         
     }
 
-    public void createTile(float newX, float newZ, Vector3 dir, int endRow, int endIndex){
+    public void createTile(float newX, float newZ, Vector3 dir, int endRow, int endIndex, List<GameObject> currentPath){
         //Create new tile
         GameObject newTile = Instantiate(exampleTile, new Vector3(newX, 0.0f, newZ) + dir, transform.rotation);
         newTile.transform.parent = gameObject.transform;
@@ -48,6 +48,8 @@ public class TileManager : MonoBehaviour{
         int newIndex = 0;
         int forkStart = 0;
         int forkIndex = 0;
+        int tempStart = 0;
+        int tempIndex = 0;
         int choice;
         int forkChoice = 0;
         bool validOption = false;
@@ -162,18 +164,23 @@ public class TileManager : MonoBehaviour{
             }
 
             if(isForking && forkStart == 0 && forkIndex == 0){
-                forkStart = newStart;
-                forkIndex = newIndex;
+                tempStart = newStart;
+                tempIndex = newIndex;
+                forkStart = 1;
+                forkIndex = 1;
                 forkChoice = choice;
                 validOption = false;
             }
         }
         if(isForking){
-            newTile.GetComponent<mapGrid>().populateMapWithFork(endRow, endIndex, newStart, newIndex, forkStart, forkIndex, validOption);
+            forkStart = newStart;
+            forkIndex = newIndex;
+            newStart = tempStart;
+            newIndex = tempIndex;
+            newTile.GetComponent<mapGrid>().populateMapWithFork(endRow, endIndex, newStart, newIndex, forkStart, forkIndex, validOption, currentPath);
             isForking = false;
         } else {
-            Debug.Log("normal expand");
-            newTile.GetComponent<mapGrid>().populateMap(endRow, endIndex, newStart, newIndex, validOption);
+            newTile.GetComponent<mapGrid>().populateMap(endRow, endIndex, newStart, newIndex, validOption, currentPath);
         }
     }
 
