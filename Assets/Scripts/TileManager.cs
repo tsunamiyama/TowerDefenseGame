@@ -17,7 +17,7 @@ public class TileManager : MonoBehaviour{
 
     public GameObject selectedBlock;
 
-    private int chanceToFork = 0;
+    private int chanceToFork = 100;
 
     private bool isForking = false;
 
@@ -60,7 +60,7 @@ public class TileManager : MonoBehaviour{
             isForking = true;
             chanceToFork = 0;
         } else {
-            chanceToFork += 0;
+            chanceToFork += 100;
         }
 
         while(!validOption){

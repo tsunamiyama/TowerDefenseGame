@@ -193,9 +193,6 @@ public class mapGrid : MonoBehaviour {
         arrowPointer2.transform.SetParent(arrowPointer.transform.parent, false);
         arrowPointer2.name = "newExpandArrow";
 
-        //Set Arrow categories
-
-
         //Set Paths
         //Set Points Walkable
         mapArray[startRow][startIndex].GetComponent<gridCube>().setWalkable(true);
@@ -204,10 +201,11 @@ public class mapGrid : MonoBehaviour {
         mapArray[endRowTwo][endIndexTwo].GetComponent<gridCube>().setWalkable(true);
         //Create Paths
         createPath(mapArray[startRow][startIndex], mapArray[length/2][width/2], wayPointHolder, currentPath);
+        List<GameObject> currentPath2 = new List<GameObject>(currentPath);
         createPath(mapArray[length/2][width/2], mapArray[endRowOne][endIndexOne], wayPointHolder, currentPath);
-        createPath(mapArray[length/2][width/2], mapArray[endRowTwo][endIndexTwo], wayPointHolder, currentPath);
+        createPath(mapArray[length/2][width/2], mapArray[endRowTwo][endIndexTwo], wayPointHolder, currentPath2);
 
-        wayPointHolder.GetComponent<waypointHolder>().removeDuplicates();
+        //wayPointHolder.GetComponent<waypointHolder>().removeDuplicates();
 
         //Add expansion arrow to exit point one
         if(needArrow){
@@ -270,7 +268,7 @@ public class mapGrid : MonoBehaviour {
             if(endIndexTwo == 0){
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x-1, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
-                arrowPointer2.GetComponent<expandButton>().currPath = currentPath;
+                arrowPointer2.GetComponent<expandButton>().currPath = currentPath2;
                 GameObject newSpawnPoint = new GameObject();
                 newSpawnPoint.name = "newSpawnPoint";
                 newSpawnPoint.transform.position = arrowPointer2.transform.position + new Vector3(1.0f, 0.5f, 0.0f);
@@ -281,7 +279,7 @@ public class mapGrid : MonoBehaviour {
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x+1, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z);
                 arrowPointer2.transform.Rotate(0.0f,180.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
-                arrowPointer2.GetComponent<expandButton>().currPath = currentPath;
+                arrowPointer2.GetComponent<expandButton>().currPath = currentPath2;
                 GameObject newSpawnPoint = new GameObject();
                 newSpawnPoint.name = "newSpawnPoint";
                 newSpawnPoint.transform.position = arrowPointer2.transform.position + new Vector3(-1.0f, 0.5f, 0.0f);
@@ -292,7 +290,7 @@ public class mapGrid : MonoBehaviour {
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z+1);
                 arrowPointer2.transform.Rotate(0.0f,90.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
-                arrowPointer2.GetComponent<expandButton>().currPath = currentPath;
+                arrowPointer2.GetComponent<expandButton>().currPath = currentPath2;
                 GameObject newSpawnPoint = new GameObject();
                 newSpawnPoint.name = "newSpawnPoint";
                 newSpawnPoint.transform.position = arrowPointer2.transform.position + new Vector3(0.0f, 0.5f, -1.0f);
@@ -304,7 +302,7 @@ public class mapGrid : MonoBehaviour {
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z-1);
                 arrowPointer2.transform.Rotate(0.0f,270.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
-                arrowPointer2.GetComponent<expandButton>().currPath = currentPath;
+                arrowPointer2.GetComponent<expandButton>().currPath = currentPath2;
                 GameObject newSpawnPoint = new GameObject();
                 newSpawnPoint.name = "newSpawnPoint";
                 newSpawnPoint.transform.position = arrowPointer2.transform.position + new Vector3(0.0f, 0.5f, 1.0f);
@@ -313,8 +311,10 @@ public class mapGrid : MonoBehaviour {
         } else {
             Destroy(arrowPointer2);
         }
-        monsterManager.GetComponent<monsterManager>().StartRound();
+        //Decrease time between spawns by 1/2
+        monsterManager.GetComponent<monsterManager>().spawnTime /= 2.0f;
 
+        monsterManager.GetComponent<monsterManager>().StartRound();
     }
     public void createPath(GameObject start, GameObject end, GameObject wpH, List<GameObject> currentPath){
         GameObject startPos = start;
