@@ -21,7 +21,7 @@ public class monsterManager : MonoBehaviour
     {
         wayPoints = waypointHolder.GetComponent<waypointHolder>().waypoints;
         monster.SetActive(false);
-        monsterNumber = 2;
+        monsterNumber = 0;
     }
 
     // Update is called once per frame

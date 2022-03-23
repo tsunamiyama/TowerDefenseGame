@@ -209,7 +209,9 @@ public class mapGrid : MonoBehaviour {
 
         //Add expansion arrow to exit point one
         if(needArrow){
+            //Bottom Row
             if(endIndexOne == 0){
+                Debug.Log("Bottom Row");
                 arrowPointer.transform.localPosition = new Vector3(mapArray[endRowOne][endIndexOne].transform.localPosition.x-1, 0, mapArray[endRowOne][endIndexOne].transform.parent.gameObject.transform.localPosition.z);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer);
                 arrowPointer.GetComponent<expandButton>().currPath = currentPath;
@@ -222,6 +224,7 @@ public class mapGrid : MonoBehaviour {
             }
             //top row
             if(endIndexOne == width-1){
+                Debug.Log("Top Row");
                 arrowPointer.transform.localPosition = new Vector3(mapArray[endRowOne][endIndexOne].transform.localPosition.x+1, 0, mapArray[endRowOne][endIndexOne].transform.parent.gameObject.transform.localPosition.z);
                 arrowPointer.transform.Rotate(0.0f,180.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer);
@@ -235,6 +238,7 @@ public class mapGrid : MonoBehaviour {
             }
             //left column
             if(endRowOne == length-1){
+                Debug.Log("Left Column");
                 arrowPointer.transform.localPosition = new Vector3(mapArray[endRowOne][endIndexOne].transform.localPosition.x, 0, mapArray[endRowOne][endIndexOne].transform.parent.gameObject.transform.localPosition.z+1);
                 arrowPointer.transform.Rotate(0.0f,90.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer);
@@ -248,6 +252,7 @@ public class mapGrid : MonoBehaviour {
             }
             //right column
             if(endRowOne == 0){
+                Debug.Log("Right Column");
                 arrowPointer.transform.localPosition = new Vector3(mapArray[endRowOne][endIndexOne].transform.localPosition.x, 0, mapArray[endRowOne][endIndexOne].transform.parent.gameObject.transform.localPosition.z-1);
                 arrowPointer.transform.Rotate(0.0f,270.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer);
@@ -266,6 +271,7 @@ public class mapGrid : MonoBehaviour {
         //Add expansion arrow to exit point Two
         if(needArrow){
             if(endIndexTwo == 0){
+                Debug.Log("Bottom Row");
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x-1, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
                 arrowPointer2.GetComponent<expandButton>().currPath = currentPath2;
@@ -276,6 +282,7 @@ public class mapGrid : MonoBehaviour {
             }
             //top row
             if(endIndexTwo == width-1){
+                Debug.Log("Top Row");
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x+1, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z);
                 arrowPointer2.transform.Rotate(0.0f,180.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
@@ -287,6 +294,7 @@ public class mapGrid : MonoBehaviour {
             }
             //left column
             if(endRowTwo == length-1){
+                Debug.Log("Left Column");
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z+1);
                 arrowPointer2.transform.Rotate(0.0f,90.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
@@ -299,6 +307,7 @@ public class mapGrid : MonoBehaviour {
             }
             //right column
             if(endRowTwo == 0){
+                Debug.Log("Right Column");
                 arrowPointer2.transform.localPosition = new Vector3(mapArray[endRowTwo][endIndexTwo].transform.localPosition.x, 0, mapArray[endRowTwo][endIndexTwo].transform.parent.gameObject.transform.localPosition.z-1);
                 arrowPointer2.transform.Rotate(0.0f,270.0f,0.0f, Space.Self);
                 monsterManager.GetComponent<monsterManager>().arrowList.Add(arrowPointer2);
