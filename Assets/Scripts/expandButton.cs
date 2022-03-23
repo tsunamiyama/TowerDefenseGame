@@ -34,6 +34,7 @@ public class expandButton : MonoBehaviour
                monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionTwo ||
                monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionThree ||
                monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionFour){
+                   Destroy(monsterManager.GetComponent<monsterManager>().spawnPoints[i]);
                    monsterManager.GetComponent<monsterManager>().spawnPoints.RemoveAt(i);
             }
         }

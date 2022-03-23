@@ -11,7 +11,7 @@ public class startTower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        health = 10;
+        health = 1000;
         money = 100;
         hpText.GetComponent<TMPro.TextMeshProUGUI>().text = health.ToString();
         moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = money.ToString();

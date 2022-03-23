@@ -9,8 +9,8 @@ public struct Point{
 
 public class TileManager : MonoBehaviour{
     public GameObject exampleTile;
-    private HashSet<Point> tileList = new HashSet<Point>();
-
+    public GameObject startTile;
+    public HashSet<Point> tileList = new HashSet<Point>();
     public int length;
 
     public int width;
@@ -24,11 +24,15 @@ public class TileManager : MonoBehaviour{
     // Start is called before the first frame update
     void Start(){
         exampleTile.SetActive(false);
+        Point startPoint;
+        startPoint.x = (int)startTile.transform.localPosition.x; 
+        startPoint.z = (int)startTile.transform.localPosition.z;
+        tileList.Add(startPoint);
     }
 
     // Update is called once per frame
     void Update(){
-        
+
     }
 
     public void createTile(float newX, float newZ, Vector3 dir, int endRow, int endIndex, List<GameObject> currentPath){
@@ -42,6 +46,7 @@ public class TileManager : MonoBehaviour{
         newPoint.x = (int)newTile.transform.localPosition.x;
         newPoint.z = (int)newTile.transform.localPosition.z;
         tileList.Add(newPoint);
+        Debug.Log(newPoint.x + ", " + newPoint.z);
 
         //pick random direction to expand to
         int newStart = 0;
@@ -57,8 +62,14 @@ public class TileManager : MonoBehaviour{
 
         //check if needs to fork
         if(Random.Range(0,100) <= chanceToFork){
-            isForking = true;
-            chanceToFork = 0;
+            if(checkIfForkPossible(newPoint)){
+                Debug.Log("split");
+                isForking = true;
+                chanceToFork = 0;
+            } else {
+                Debug.Log("split not possible");
+                chanceToFork = 100;
+            }
         } else {
             chanceToFork += 100;
         }
@@ -72,40 +83,83 @@ public class TileManager : MonoBehaviour{
                 }
             }
 
-            //Don't go up
-            if(dir == new Vector3(-7.0f, 0.0f, 0.0f)){
-                //go right
+            if(checkAllDirections(newPoint)){
+                //Don't go up
+                if(dir == new Vector3(-7.0f, 0.0f, 0.0f)){
+                    //go right
+                    if(choice == 1){
+                        newStart = 0;
+                        newIndex = Random.Range(1,5);
+                        validOption = checkIfValidDirection(newPoint, "right");
+                    }
+                    //go down
+                    if(choice == 2){
+                        newStart = Random.Range(1,5);
+                        newIndex = 0;
+                        validOption = checkIfValidDirection(newPoint, "down");
+                    }
+                    //go left
+                    if(choice == 3){
+                        newStart = 6;
+                        newIndex = Random.Range(1,5);
+                        validOption = checkIfValidDirection(newPoint, "left");
+                    }
+                }
+                //Don't go right
+                if(dir == new Vector3(0.0f, 0.0f, 7.0f)){
+                    //go left
+                    if(choice == 1){
+                        newStart = 6;
+                        newIndex = Random.Range(1,5);
+                        validOption = checkIfValidDirection(newPoint, "left");
+                    }
+                    //go down
+                    if(choice == 2){
+                        newStart = Random.Range(1,5);
+                        newIndex = 0;
+                        validOption = checkIfValidDirection(newPoint, "down");
+                    }
+                    //go up
+                    if(choice == 3){
+                        newStart = Random.Range(1,5);
+                        newIndex = 6;
+                        validOption = checkIfValidDirection(newPoint, "up");
+                    }
+                }
+                //Don't go down
+                if(dir == new Vector3(7.0f, 0.0f, 0.0f)){
+                    //go left
+                    if(choice == 1){
+                        newStart = 6;
+                        newIndex = Random.Range(1,5);
+                        validOption = checkIfValidDirection(newPoint, "left");
+                    }
+                    //go right
+                    if(choice == 2){
+                        newStart = 0;
+                        newIndex = Random.Range(1,5);
+                        validOption = checkIfValidDirection(newPoint, "right");
+                    }
+                    //go up
+                    if(choice == 3){
+                        newStart = Random.Range(1,5);
+                        newIndex = 6;
+                        validOption = checkIfValidDirection(newPoint, "up");
+                    }
+                }
+                //Don't go left
+                if(dir == new Vector3(0.0f, 0.0f, -7.0f)){
+                //go down
                 if(choice == 1){
+                    newStart = Random.Range(1,5);
+                    newIndex = 0;
+                    validOption = checkIfValidDirection(newPoint, "down");
+                }
+                //go right
+                if(choice == 2){
                     newStart = 0;
                     newIndex = Random.Range(1,5);
                     validOption = checkIfValidDirection(newPoint, "right");
-                }
-                //go down
-                if(choice == 2){
-                    newStart = Random.Range(1,5);
-                    newIndex = 0;
-                    validOption = checkIfValidDirection(newPoint, "down");
-                }
-                //go left
-                if(choice == 3){
-                    newStart = 6;
-                    newIndex = Random.Range(1,5);
-                    validOption = checkIfValidDirection(newPoint, "left");
-                }
-            }
-            //Don't go right
-            if(dir == new Vector3(0.0f, 0.0f, 7.0f)){
-                //go left
-                if(choice == 1){
-                    newStart = 6;
-                    newIndex = Random.Range(1,5);
-                    validOption = checkIfValidDirection(newPoint, "left");
-                }
-                //go down
-                if(choice == 2){
-                    newStart = Random.Range(1,5);
-                    newIndex = 0;
-                    validOption = checkIfValidDirection(newPoint, "down");
                 }
                 //go up
                 if(choice == 3){
@@ -114,56 +168,13 @@ public class TileManager : MonoBehaviour{
                     validOption = checkIfValidDirection(newPoint, "up");
                 }
             }
-            //Don't go down
-            if(dir == new Vector3(7.0f, 0.0f, 0.0f)){
-                //go left
-                if(choice == 1){
-                    newStart = 6;
-                    newIndex = Random.Range(1,5);
-                    validOption = checkIfValidDirection(newPoint, "left");
-                }
-                //go right
-                if(choice == 2){
-                    newStart = 0;
-                    newIndex = Random.Range(1,5);
-                    validOption = checkIfValidDirection(newPoint, "right");
-                }
-                //go up
-                if(choice == 3){
-                    newStart = Random.Range(1,5);
-                    newIndex = 6;
-                    validOption = checkIfValidDirection(newPoint, "up");
-                }
-            }
-            //Don't go left
-            if(dir == new Vector3(0.0f, 0.0f, -7.0f)){
-                //go down
-                if(choice == 1){
-                    newStart = Random.Range(1,5);
-                    newIndex = 0;
-                    validOption = checkIfValidDirection(newPoint, "down");
-                }
-                //go right
-                if(choice == 2){
-                    newStart = 0;
-                    newIndex = Random.Range(1,5);
-                    validOption = checkIfValidDirection(newPoint, "right");
-                }
-                //go up
-                if(choice == 3){
-                    newStart = Random.Range(1,5);
-                    newIndex = 6;
-                    validOption = checkIfValidDirection(newPoint, "up");
-                }
-            }
-        
-            if(!checkAllDirections(newPoint)){
+            } else {
                 newStart = length/2;
                 newIndex = width/2;
                 break;
             }
 
-            if(isForking && forkStart == 0 && forkIndex == 0){
+            if(validOption && isForking && forkStart == 0 && forkIndex == 0){
                 tempStart = newStart;
                 tempIndex = newIndex;
                 forkStart = 1;
@@ -177,11 +188,16 @@ public class TileManager : MonoBehaviour{
             forkIndex = newIndex;
             newStart = tempStart;
             newIndex = tempIndex;
+            //Debug.Log("PathOne: " + newStart + ", " + newIndex);
+            //Debug.Log("PathTwo: " + forkStart + ", " + forkIndex);
             newTile.GetComponent<mapGrid>().populateMapWithFork(endRow, endIndex, newStart, newIndex, forkStart, forkIndex, validOption, currentPath);
             isForking = false;
         } else {
             newTile.GetComponent<mapGrid>().populateMap(endRow, endIndex, newStart, newIndex, validOption, currentPath);
         }
+        /*foreach(Point p in tileList){
+            Debug.Log(p.x + "," + p.z);
+        }*/
     }
 
     public bool checkIfValidDirection(Point tilePoint, string dir){
@@ -196,6 +212,7 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
+                Debug.Log("up");
                 break;
             case "right":
                 nextPoint.x = tilePoint.x;
@@ -205,6 +222,7 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
+                Debug.Log("right");
                 break;
             case "down":
                 nextPoint.x = tilePoint.x - 7;
@@ -214,6 +232,7 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
+                Debug.Log("down");
                 break;
             case "left":
                 nextPoint.x = tilePoint.x;
@@ -223,15 +242,59 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
+                Debug.Log("left");
                 break;
             default:
                 return false;
         }
-
         return true;
     }
 
     public bool checkAllDirections(Point tilePoint){
+        Point nextPoint;
+        int count = 0;
+        //Check Up
+        nextPoint.x = tilePoint.x + 7;
+        nextPoint.z = tilePoint.z;
+        if(tileList.Contains(nextPoint)){
+            Debug.Log("Can't Go Up");
+            count++;
+        }
+
+        //Check Right
+        nextPoint.x = tilePoint.x;
+        nextPoint.z = tilePoint.z - 7;
+        if(tileList.Contains(nextPoint)){
+            Debug.Log("Can't Go Right");
+            count++;
+        }
+
+        //Check Down
+        nextPoint.x = tilePoint.x - 7;
+        nextPoint.z = tilePoint.z;
+        if(tileList.Contains(nextPoint)){
+            Debug.Log("Can't Go Down");
+            count++;
+        }
+
+        //Check Left
+        nextPoint.x = tilePoint.x;
+        nextPoint.z = tilePoint.z + 7;
+        if(tileList.Contains(nextPoint)){
+            Debug.Log("Can't Go Left");
+            count++;
+        }
+
+        Debug.Log(count);
+
+        if(count != 4){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public bool checkIfForkPossible(Point tilePoint){
         Point nextPoint;
         int count = 0;
         //Check Up
@@ -262,7 +325,7 @@ public class TileManager : MonoBehaviour{
             count++;
         }
 
-        if(count != 4){
+        if(count <= 2){
             return true;
         }
 

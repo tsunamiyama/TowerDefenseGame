@@ -634,6 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exampleTile: {fileID: 143677429}
+  startTile: {fileID: 1752421139}
   length: 7
   width: 7
   selectedBlock: {fileID: 0}
@@ -4537,7 +4538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2af0bb996e1224e81dee14545374b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 100
   money: 0
   hpText: {fileID: 32892530}
   moneyText: {fileID: 666912839}
@@ -4718,6 +4719,7 @@ MonoBehaviour:
   waypointHolder: {fileID: 2104925121}
   tileManager: {fileID: 98548242}
   startTower: {fileID: 1050899495}
+  spawnTime: 1
 --- !u!1 &1149693738
 GameObject:
   m_ObjectHideFlags: 0
