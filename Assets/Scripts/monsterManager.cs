@@ -55,7 +55,7 @@ public class monsterManager : MonoBehaviour
         int count = monsterNumber;
         int count2 = (int)(monsterNumber/10.0);
         count -= count2;
-        Debug.Log("Count: " + count + " Count2: " + count2);
+        //Debug.Log("Count: " + count + " Count2: " + count2);
 
         while(count > 0){
             for(int i = 0; i < spawnPoints.Count; i++){

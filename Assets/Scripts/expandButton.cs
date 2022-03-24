@@ -7,6 +7,7 @@ public class expandButton : MonoBehaviour
     public GameObject tileManager;
     public GameObject waypointManager;
     public GameObject monsterManager;
+    public GameObject upgradePanel;
     public List<GameObject> currPath = new List<GameObject>();
     private Vector3 positionOne;
     private Vector3 positionTwo;
@@ -44,6 +45,10 @@ public class expandButton : MonoBehaviour
         monsterManager.GetComponent<monsterManager>().roundNumber++;
 
         gameObject.SetActive(false);
+
+        if(upgradePanel != null){
+            upgradePanel.GetComponent<pausePanel>().panelOn();
+        }
         //go down
         if(gameObject.transform.localPosition.x < -3){
             //Debug.Log("Go Down");
