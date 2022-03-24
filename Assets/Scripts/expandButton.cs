@@ -41,6 +41,8 @@ public class expandButton : MonoBehaviour
 
         monsterManager.GetComponent<monsterManager>().arrowList.Remove(gameObject);
 
+        monsterManager.GetComponent<monsterManager>().roundNumber++;
+
         gameObject.SetActive(false);
         //go down
         if(gameObject.transform.localPosition.x < -3){

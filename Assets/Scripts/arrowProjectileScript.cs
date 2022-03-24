@@ -8,6 +8,7 @@ public class arrowProjectileScript : MonoBehaviour
     public GameObject target;
     public float arrowSpeed = 12.0f;
     public int damage = 1;
+    public bool damageDone = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +22,14 @@ public class arrowProjectileScript : MonoBehaviour
             Destroy(this.gameObject);
         }
         if(launched && target != null){
-            target.GetComponent<monster>().health -= damage;
+            if(damageDone == false){
+                target.GetComponent<monster>().health -= damage;
+                damageDone = true;
+            }
             gameObject.transform.LookAt(target.transform);
             this.transform.Translate(0,0,arrowSpeed*Time.deltaTime);
 
-            if(Vector3.Distance(this.transform.position, target.transform.position) < 0.5f){
+            if(Vector3.Distance(this.transform.position, target.transform.position) < 0.1f){
                 //Debug.Log("hit");
                 Destroy(this.gameObject);
                 if(target.GetComponent<monster>().health <= 0){

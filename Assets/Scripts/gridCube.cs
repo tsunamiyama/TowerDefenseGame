@@ -100,10 +100,8 @@ public class gridCube : MonoBehaviour
     }
 
     public void OnMouseExit(){
-        if(!EventSystem.current.IsPointerOverGameObject()){
-            if(!selected){
-                gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
-            }
+        if(!selected){
+            gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
         }
     }
 }

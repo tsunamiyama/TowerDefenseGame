@@ -8,8 +8,10 @@ public class monsterManager : MonoBehaviour
     public List<GameObject> wayPoints = new List<GameObject>();
     public List<GameObject> spawnPoints = new List<GameObject>();
     public List<GameObject> arrowList = new List<GameObject>();
-    int monsterNumber;
+    public int monsterNumber;
+    public int roundNumber;
     public GameObject monster;
+    public GameObject monster2;
     public GameObject waypointHolder;
     public GameObject tileManager;
     bool waitingForLevelEnd = false;
@@ -21,13 +23,15 @@ public class monsterManager : MonoBehaviour
     {
         wayPoints = waypointHolder.GetComponent<waypointHolder>().waypoints;
         monster.SetActive(false);
+        monster2.SetActive(false);
         monsterNumber = 2;
+        roundNumber = 0;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(this.transform.childCount == 1 && waitingForLevelEnd){
+        if(this.transform.childCount == 2 && waitingForLevelEnd){
             for(int i = 0; i < arrowList.Count; i++){
                 arrowList[i].SetActive(true);
             }
@@ -49,6 +53,10 @@ public class monsterManager : MonoBehaviour
 
     IEnumerator spawnMonster(){
         int count = monsterNumber;
+        int count2 = (int)(monsterNumber/10.0);
+        count -= count2;
+        Debug.Log("Count: " + count + " Count2: " + count2);
+
         while(count > 0){
             for(int i = 0; i < spawnPoints.Count; i++){
                 monster.GetComponent<monster>().listOfMonsterWaypoints = arrowList[i].GetComponent<expandButton>().currPath;
@@ -61,6 +69,21 @@ public class monsterManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnTime);
             }
             count--;
+        }
+        if(roundNumber >= 3){
+            while(count2 > 0){
+                for(int i = 0; i < spawnPoints.Count; i++){
+                    monster2.GetComponent<monster>().listOfMonsterWaypoints = arrowList[i].GetComponent<expandButton>().currPath;
+                    monster2.GetComponent<monster>().currentWaypoint = monster2.GetComponent<monster>().listOfMonsterWaypoints.Count-1;
+                    GameObject monsterClone2 = Instantiate(monster2);
+                    monsterClone2.SetActive(true);
+                    monsterClone2.transform.parent = gameObject.transform;
+                    monsterClone2.transform.rotation = monster2.transform.rotation;
+                    monsterClone2.transform.localPosition = spawnPoints[i].transform.localPosition;
+                    yield return new WaitForSeconds(spawnTime);
+                }
+                count2--;
+            }
         }
         waitingForLevelEnd = true;
     }
