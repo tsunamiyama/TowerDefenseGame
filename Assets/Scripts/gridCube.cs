@@ -1,6 +1,8 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.EventSystems;
+
 
 public class gridCube : MonoBehaviour
 {
@@ -76,27 +78,32 @@ public class gridCube : MonoBehaviour
     }
 
     public void OnMouseOver(){
-        if(!selected){
-            gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            if(!selected){
+                gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+            }
         }
     }
 
     public void OnMouseDown(){
-        //deselect old block if there
-        if(this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock != null){
-            this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock.GetComponent<gridCube>().selected = false;
-            this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            //deselect old block if there
+            if(this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock != null){
+                this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock.GetComponent<gridCube>().selected = false;
+                this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
+            }
+            //select this block now
+            selected = true;
+            this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock = this.gameObject;
+            gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
-
-        //select this block now
-        selected = true;
-        this.transform.parent.parent.parent.parent.gameObject.GetComponent<TileManager>().selectedBlock = this.gameObject;
-        gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
     }
 
     public void OnMouseExit(){
-        if(!selected){
-            gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            if(!selected){
+                gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color32(31,178,40,255));
+            }
         }
     }
 }

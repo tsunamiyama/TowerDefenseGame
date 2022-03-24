@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ballistaScript : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ballistaScript : MonoBehaviour
         rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
         arrow.SetActive(false);
         fireRate = 1.75f;
-        lastShot = 0.0f;
+        lastShot = Time.time;
     }
 
     // Update is called once per frame
@@ -42,14 +43,18 @@ public class ballistaScript : MonoBehaviour
     }
 
     void OnMouseOver(){
-        if(parentBlock != null){
-            parentBlock.GetComponent<gridCube>().OnMouseOver();
-            rangeIndicator.GetComponent<MeshRenderer>().enabled = true;
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            if(parentBlock != null){
+                parentBlock.GetComponent<gridCube>().OnMouseOver();
+                rangeIndicator.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
     }
 
     void OnMouseExit(){
-        rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
-        parentBlock.GetComponent<gridCube>().OnMouseExit();
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
+            parentBlock.GetComponent<gridCube>().OnMouseExit();
+        }
     }
 }

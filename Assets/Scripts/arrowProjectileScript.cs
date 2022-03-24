@@ -11,7 +11,7 @@ public class arrowProjectileScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class arrowProjectileScript : MonoBehaviour
             gameObject.transform.LookAt(target.transform);
             this.transform.Translate(0,0,arrowSpeed*Time.deltaTime);
 
-            if(Vector3.Distance(this.transform.position, target.transform.position) < 0.1f){
+            if(Vector3.Distance(this.transform.position, target.transform.position) < 0.5f){
                 //Debug.Log("hit");
                 Destroy(this.gameObject);
                 if(target.GetComponent<monster>().health <= 0){

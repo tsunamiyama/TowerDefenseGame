@@ -17,7 +17,7 @@ public class TileManager : MonoBehaviour{
 
     public GameObject selectedBlock;
 
-    private int chanceToFork = 100;
+    private int chanceToFork = -1;
 
     private bool isForking = false;
 
@@ -46,7 +46,7 @@ public class TileManager : MonoBehaviour{
         newPoint.x = (int)newTile.transform.localPosition.x;
         newPoint.z = (int)newTile.transform.localPosition.z;
         tileList.Add(newPoint);
-        Debug.Log(newPoint.x + ", " + newPoint.z);
+        //Debug.Log(newPoint.x + ", " + newPoint.z);
 
         //pick random direction to expand to
         int newStart = 0;
@@ -63,15 +63,13 @@ public class TileManager : MonoBehaviour{
         //check if needs to fork
         if(Random.Range(0,100) <= chanceToFork){
             if(checkIfForkPossible(newPoint)){
-                Debug.Log("split");
                 isForking = true;
                 chanceToFork = 0;
             } else {
-                Debug.Log("split not possible");
                 chanceToFork = 100;
             }
         } else {
-            chanceToFork += 100;
+            chanceToFork += 45;
         }
 
         while(!validOption){
@@ -212,7 +210,6 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
-                Debug.Log("up");
                 break;
             case "right":
                 nextPoint.x = tilePoint.x;
@@ -222,7 +219,6 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
-                Debug.Log("right");
                 break;
             case "down":
                 nextPoint.x = tilePoint.x - 7;
@@ -232,7 +228,6 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
-                Debug.Log("down");
                 break;
             case "left":
                 nextPoint.x = tilePoint.x;
@@ -242,7 +237,6 @@ public class TileManager : MonoBehaviour{
                 } else {
                     tileList.Add(nextPoint);
                 }
-                Debug.Log("left");
                 break;
             default:
                 return false;
@@ -257,7 +251,6 @@ public class TileManager : MonoBehaviour{
         nextPoint.x = tilePoint.x + 7;
         nextPoint.z = tilePoint.z;
         if(tileList.Contains(nextPoint)){
-            Debug.Log("Can't Go Up");
             count++;
         }
 
@@ -265,7 +258,6 @@ public class TileManager : MonoBehaviour{
         nextPoint.x = tilePoint.x;
         nextPoint.z = tilePoint.z - 7;
         if(tileList.Contains(nextPoint)){
-            Debug.Log("Can't Go Right");
             count++;
         }
 
@@ -273,7 +265,6 @@ public class TileManager : MonoBehaviour{
         nextPoint.x = tilePoint.x - 7;
         nextPoint.z = tilePoint.z;
         if(tileList.Contains(nextPoint)){
-            Debug.Log("Can't Go Down");
             count++;
         }
 
@@ -281,11 +272,8 @@ public class TileManager : MonoBehaviour{
         nextPoint.x = tilePoint.x;
         nextPoint.z = tilePoint.z + 7;
         if(tileList.Contains(nextPoint)){
-            Debug.Log("Can't Go Left");
             count++;
         }
-
-        Debug.Log(count);
 
         if(count != 4){
             return true;
