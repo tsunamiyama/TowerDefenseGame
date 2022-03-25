@@ -12,6 +12,7 @@ public class upgradeButton : MonoBehaviour
     public GameObject ballistaParent;
     public GameObject ballistaTemplate;
     public GameObject upgradePanel;
+    public GameObject monsterManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,9 @@ public class upgradeButton : MonoBehaviour
             case "ballista":
                 ballistaUpgrade();
                 break;
+            case "monster":
+                monsterUpgrade();
+                break;
         }
 
         upgradePanel.GetComponent<upgradePanel>().panelOff();
@@ -41,7 +45,8 @@ public class upgradeButton : MonoBehaviour
     public void ballistaUpgrade(){
         //Upgrade template for future ballista
         if(buttonUpgradeType == "attackspeed"){
-                ballistaTemplate.GetComponent<ballistaScript>().fireRate *= 1.1f;
+                float baseSpeed = 1.75f;
+                ballistaTemplate.GetComponent<ballistaScript>().fireRate -= baseSpeed*0.1f;
             }
         if(buttonUpgradeType == "damage"){
                 ballistaTemplate.GetComponent<ballistaScript>().damage *= 1.1f;
@@ -68,5 +73,15 @@ public class upgradeButton : MonoBehaviour
         }
 
 
+    }
+    public void monsterUpgrade(){
+        for(int i = 0; i < monsterManager.transform.childCount; i++){
+            if(buttonUpgradeType == "gold"){
+                //monsterManager.transform.GetChild(i).gameObject.SetActive(true);
+                int val = monsterManager.transform.GetChild(i).gameObject.GetComponent<monster>().value;
+                monsterManager.transform.GetChild(i).gameObject.GetComponent<monster>().value = val + (int)(val*buttonupgradeValue);
+                //monsterManager.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
     }
 }

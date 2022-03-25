@@ -48,4 +48,8 @@ public class towerRange : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other){
+        inRange.Remove(other.gameObject);
+    }
 }

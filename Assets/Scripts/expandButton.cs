@@ -8,6 +8,7 @@ public class expandButton : MonoBehaviour
     public GameObject waypointManager;
     public GameObject monsterManager;
     public GameObject upgradePanel;
+    public bool getsUpgrades;
     public List<GameObject> currPath = new List<GameObject>();
     private Vector3 positionOne;
     private Vector3 positionTwo;
@@ -66,13 +67,15 @@ public class expandButton : MonoBehaviour
         monsterManager.GetComponent<monsterManager>().arrowList.Remove(gameObject);
 
         monsterManager.GetComponent<monsterManager>().roundNumber++;
+    }
 
-        if(upgradePanel == null){
+    void OnMouseUp(){
+        if(!getsUpgrades){
+            gameObject.SetActive(false);
             createNext();
+        } else {
+            upgradePanel.GetComponent<upgradePanel>().panelOn(gameObject);
+            gameObject.SetActive(false);
         }
-
-        upgradePanel.GetComponent<upgradePanel>().panelOn(gameObject);
-
-        gameObject.SetActive(false);
     }
 }

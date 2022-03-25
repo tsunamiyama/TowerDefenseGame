@@ -1099,6 +1099,7 @@ MonoBehaviour:
   ballistaParent: {fileID: 1659950508}
   ballistaTemplate: {fileID: 1154339580}
   upgradePanel: {fileID: 11509694}
+  monsterManager: {fileID: 1115661472}
 --- !u!1 &267510745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1631,7 @@ MonoBehaviour:
   waypointManager: {fileID: 2104925121}
   monsterManager: {fileID: 1115661472}
   upgradePanel: {fileID: 11509694}
+  getsUpgrades: 1
   currPath: []
 --- !u!4 &323694988
 Transform:
@@ -4427,6 +4429,7 @@ MonoBehaviour:
   ballistaParent: {fileID: 1659950508}
   ballistaTemplate: {fileID: 1154339580}
   upgradePanel: {fileID: 11509694}
+  monsterManager: {fileID: 1115661472}
 --- !u!1 &902420364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4848,6 +4851,7 @@ MonoBehaviour:
   ballistaParent: {fileID: 1659950508}
   ballistaTemplate: {fileID: 1154339580}
   upgradePanel: {fileID: 11509694}
+  monsterManager: {fileID: 1115661472}
 --- !u!1 &967010844
 GameObject:
   m_ObjectHideFlags: 0
@@ -7686,7 +7690,8 @@ MonoBehaviour:
   tileManager: {fileID: 98548242}
   waypointManager: {fileID: 2104925121}
   monsterManager: {fileID: 1115661472}
-  upgradePanel: {fileID: 0}
+  upgradePanel: {fileID: 11509694}
+  getsUpgrades: 0
   currPath: []
 --- !u!65 &1538189312
 BoxCollider:

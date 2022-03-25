@@ -30,20 +30,26 @@ public class upgradePanel : MonoBehaviour
             "Increase all ballista towers' range by 10%",
             "ballista",
             "range",
-            10.0f
+            0.1f
         ),
         new upgradeOption(
             "Increase all ballista towers' damage by 10%",
             "ballista",
             "damage",
-            10.0f
+            0.1f
         ),
         new upgradeOption(
             "Increase all ballista towers' attack speed by 10%",
             "ballista",
             "attackspeed",
-            10.0f
-        )
+            0.1f
+        ),
+        new upgradeOption(
+            "Increase gold dropped by monsters by 10%",
+            "monster",
+            "gold",
+            0.1f
+        ),
     };
 
     // Start is called before the first frame update
@@ -76,7 +82,7 @@ public class upgradePanel : MonoBehaviour
     }
 
     public void getUpgradeOptions(GameObject upgrade){
-        int chosenUpgrade = Random.Range(0, listofUpgrades.Count-1);
+        int chosenUpgrade = Random.Range(0, listofUpgrades.Count);
         upgrade.GetComponent<upgradeButton>().buttonUpgradeText = listofUpgrades[chosenUpgrade].upgradeText;
         upgrade.GetComponent<upgradeButton>().buttonUpgradeTower = listofUpgrades[chosenUpgrade].upgradeTower;
         upgrade.GetComponent<upgradeButton>().buttonUpgradeType = listofUpgrades[chosenUpgrade].upgradeArea;

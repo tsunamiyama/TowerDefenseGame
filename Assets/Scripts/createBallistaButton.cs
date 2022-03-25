@@ -12,13 +12,17 @@ public class createBallistaButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        updateText();
     }
 
     // Update is called once per frame
     public void Update()
     {
         
+    }
+
+    public void updateText(){
+        gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "Ballista: $" + cost; 
     }
 
     public void selectBallista(){
@@ -32,6 +36,8 @@ public class createBallistaButton : MonoBehaviour
             ballistaClone.GetComponent<ballistaScript>().parentBlock = selectedBlock;
 
             startTower.GetComponent<startTower>().updateTowerMoney(cost);
+            cost += (int)(cost*0.15f);
+            updateText();
 
             tileManager.GetComponent<TileManager>().selectedBlock.GetComponent<gridCube>().builtOn = true;
         }
