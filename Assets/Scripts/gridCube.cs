@@ -11,6 +11,7 @@ public class gridCube : MonoBehaviour
     private int hCost;
     private GameObject parent;
     public bool selected = false;
+    public bool builtOn = false;
     private List<GameObject> neighbors = new List<GameObject>();
     // Start is called before the first frame update
     void Start()

@@ -8,6 +8,7 @@ public class ballistaScript : MonoBehaviour
     public GameObject rangeIndicator;
     public float fireRate;
     public float lastShot;
+    public float damage;
     public GameObject arrow;
     public GameObject parentBlock;
     public GameObject towerTop;
@@ -19,6 +20,7 @@ public class ballistaScript : MonoBehaviour
         arrow.SetActive(false);
         fireRate = 1.75f;
         lastShot = Time.time;
+        damage = 1.0f;
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class ballistaScript : MonoBehaviour
         if(Time.time > fireRate + lastShot){
             //Debug.Log("Fire");
             GameObject arrowClone = Instantiate(arrow);
+            arrowClone.GetComponent<arrowProjectileScript>().damage = this.damage;
             arrowClone.transform.SetParent(arrow.transform.parent, false);
             arrowClone.transform.position = arrow.transform.position;
             arrowClone.transform.rotation = arrow.transform.rotation;
