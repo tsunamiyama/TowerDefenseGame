@@ -29,26 +29,7 @@ public class expandButton : MonoBehaviour
 
     }
 
-    void OnMouseDown(){
-        for(int i = 0; i < monsterManager.GetComponent<monsterManager>().spawnPoints.Count; i++){
-            if(monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionOne ||
-               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionTwo ||
-               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionThree ||
-               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionFour){
-                   Destroy(monsterManager.GetComponent<monsterManager>().spawnPoints[i]);
-                   monsterManager.GetComponent<monsterManager>().spawnPoints.RemoveAt(i);
-            }
-        }
-
-        monsterManager.GetComponent<monsterManager>().arrowList.Remove(gameObject);
-
-        monsterManager.GetComponent<monsterManager>().roundNumber++;
-
-        gameObject.SetActive(false);
-
-        if(upgradePanel != null){
-            upgradePanel.GetComponent<pausePanel>().panelOn();
-        }
+    public void createNext(){
         //go down
         if(gameObject.transform.localPosition.x < -3){
             //Debug.Log("Go Down");
@@ -69,5 +50,29 @@ public class expandButton : MonoBehaviour
             tileManager.GetComponent<TileManager>().createTile(gameObject.transform.parent.localPosition.x, gameObject.transform.parent.localPosition.z, new Vector3(7.0f, 0.0f, 0.0f), (int)gameObject.transform.localPosition.z+3, 0, currPath);
         }
         Destroy(gameObject);
+    }
+
+    void OnMouseDown(){
+        for(int i = 0; i < monsterManager.GetComponent<monsterManager>().spawnPoints.Count; i++){
+            if(monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionOne ||
+               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionTwo ||
+               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionThree ||
+               monsterManager.GetComponent<monsterManager>().spawnPoints[i].transform.position == positionFour){
+                   Destroy(monsterManager.GetComponent<monsterManager>().spawnPoints[i]);
+                   monsterManager.GetComponent<monsterManager>().spawnPoints.RemoveAt(i);
+            }
+        }
+
+        monsterManager.GetComponent<monsterManager>().arrowList.Remove(gameObject);
+
+        monsterManager.GetComponent<monsterManager>().roundNumber++;
+
+        if(upgradePanel == null){
+            createNext();
+        }
+
+        upgradePanel.GetComponent<upgradePanel>().panelOn(gameObject);
+
+        gameObject.SetActive(false);
     }
 }
