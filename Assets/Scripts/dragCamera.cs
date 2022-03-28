@@ -18,15 +18,6 @@ public class dragCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Input.GetMouseButton(0)){
-            float speed = 5*Time.deltaTime;
-            Vector3 inputDir = new Vector3(Input.GetAxis("Mouse X")*speed, 0, Input.GetAxis("Mouse Y")*speed);
-            inputDir = mainCam.transform.TransformDirection(inputDir);
-            inputDir.y = 0;
-            //inputDir.Normalize();
-            mainCam.transform.position -= inputDir;
-        }
-
         if (Input.touchSupported)
         {
             // Pinch to zoom
@@ -50,12 +41,9 @@ public class dragCamera : MonoBehaviour
         }
         else
         {
-
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             Zoom(scroll, MouseZoomSpeed);
         }
-
-
 
         if(mainCam.fieldOfView < ZoomMinBound) 
         {
@@ -63,11 +51,19 @@ public class dragCamera : MonoBehaviour
         } else if(mainCam.fieldOfView > ZoomMaxBound) {
             mainCam.fieldOfView = 179.9f;
         }
+
+        if(Input.GetMouseButton(0)){
+            float speed = 5*Time.deltaTime;
+            Vector3 inputDir = new Vector3(Input.GetAxis("Mouse X")*speed, 0, Input.GetAxis("Mouse Y")*speed);
+            inputDir = mainCam.transform.TransformDirection(inputDir);
+            inputDir.y = 0;
+            //inputDir.Normalize();
+            mainCam.transform.position -= inputDir;
+        }
     }
 
     void Zoom(float deltaMagnitudeDiff, float speed)
     {
-
         mainCam.fieldOfView += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
         mainCam.fieldOfView = Mathf.Clamp(mainCam.fieldOfView, ZoomMinBound, ZoomMaxBound);
