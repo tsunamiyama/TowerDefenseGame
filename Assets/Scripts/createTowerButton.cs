@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class createBallistaButton : MonoBehaviour
+public class createTowerButton : MonoBehaviour
 {
     public GameObject tileManager;
-    public GameObject ballistaModel;
+    public GameObject towerModel;
     public GameObject startTower;
-    public GameObject ballistaParent;
+    public GameObject boughtTowersParent;
+    public string towerType;
     public int cost = 100;
     // Start is called before the first frame update
     void Start()
@@ -22,18 +23,23 @@ public class createBallistaButton : MonoBehaviour
     }
 
     public void updateText(){
-        gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "Ballista: $" + cost; 
+        gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text =  towerType + ": $" + cost; 
     }
 
-    public void selectBallista(){
+    public void selectTower(){
         if(tileManager.GetComponent<TileManager>().selectedBlock != null && startTower.GetComponent<startTower>().money >= cost && tileManager.GetComponent<TileManager>().selectedBlock.GetComponent<gridCube>().builtOn == false){
             var selectedBlock = tileManager.GetComponent<TileManager>().selectedBlock.gameObject;
-            GameObject ballistaClone = Instantiate(ballistaModel);
-            ballistaClone.transform.SetParent(ballistaParent.transform, true);
-            ballistaClone.transform.position = selectedBlock.transform.position + new Vector3(0.0f, 0.25f, 0.0f);
-            ballistaClone.transform.rotation = selectedBlock.transform.rotation;
-            ballistaClone.SetActive(true);
-            ballistaClone.GetComponent<ballistaScript>().parentBlock = selectedBlock;
+            GameObject towerClone = Instantiate(towerModel);
+            towerClone.transform.SetParent(boughtTowersParent.transform, true);
+            towerClone.transform.position = selectedBlock.transform.position + new Vector3(0.0f, 0.25f, 0.0f);
+            towerClone.transform.rotation = selectedBlock.transform.rotation;
+            towerClone.SetActive(true);
+
+            switch(towerType){
+                case "ballista":
+                    towerClone.GetComponent<ballistaScript>().parentBlock = selectedBlock;
+                    break;
+            }
 
             startTower.GetComponent<startTower>().updateTowerMoney(cost);
             cost += (int)(cost*0.15f);

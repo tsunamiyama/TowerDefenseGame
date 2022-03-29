@@ -1680,10 +1680,10 @@ RectTransform:
   m_Father: {fileID: 1974873004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 301.80002, y: 11.499994}
-  m_SizeDelta: {x: -640, y: -419.89246}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 301.80002, y: 11.5}
+  m_SizeDelta: {x: 160, y: 32.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327086091
 MonoBehaviour:
@@ -8467,7 +8467,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1642329151}
         m_TargetAssemblyTypeName: createBallistaButton, Assembly-CSharp
-        m_MethodName: selectBallista
+        m_MethodName: selectTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8528,9 +8528,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileManager: {fileID: 98548242}
-  ballistaModel: {fileID: 1154339580}
+  towerModel: {fileID: 1154339580}
   startTower: {fileID: 1050899495}
-  ballistaParent: {fileID: 1659950508}
+  boughtTowersParent: {fileID: 1659950508}
+  towerType: ballista
   cost: 100
 --- !u!1 &1644586930
 GameObject:
