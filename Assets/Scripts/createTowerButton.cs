@@ -39,6 +39,9 @@ public class createTowerButton : MonoBehaviour
                 case "ballista":
                     towerClone.GetComponent<ballistaScript>().parentBlock = selectedBlock;
                     break;
+                case "mortar":
+                    towerClone.GetComponent<mortarScript>().parentBlock = selectedBlock;
+                    break;
             }
 
             startTower.GetComponent<startTower>().updateTowerMoney(cost);
