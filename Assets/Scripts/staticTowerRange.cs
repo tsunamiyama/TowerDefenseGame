@@ -14,13 +14,13 @@ public class staticTowerRange : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(inRange.Count > 0 && (inRange[0] == null || inRange[0].GetComponent<monster>().health <= 0)){
             inRange.Remove(inRange[0]);
         } else if(inRange.Count > 0){
             inRange.Remove(null);
-            //tower.GetComponent<ballistaScript>().shoot(inRange[0]);
+            tower.GetComponent<mortarScript>().shoot(inRange[0]);
         }
     }
 

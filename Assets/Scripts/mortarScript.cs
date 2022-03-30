@@ -7,6 +7,7 @@ public class mortarScript : MonoBehaviour
 {
     public GameObject rangeIndicator;
     public GameObject parentBlock;
+    public GameObject projectile;
     public float fireRate;
     public float lastShot;
     public float damage;
@@ -14,6 +15,7 @@ public class mortarScript : MonoBehaviour
     void Start()
     {
         rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
+        projectile.SetActive(false);
         fireRate = 3.0f;
         damage = 1.0f;
         lastShot = Time.time;
@@ -23,6 +25,22 @@ public class mortarScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void shoot(GameObject target){
+        if(Time.time > fireRate + lastShot){
+            //Debug.Log("Fire");
+            GameObject projClone = Instantiate(projectile);
+            //projClone.GetComponent<arrowProjectileScript>().damage = this.damage;
+            projClone.transform.SetParent(projectile.transform.parent, false);
+            projClone.transform.position = projectile.transform.position;
+            projClone.transform.rotation = projectile.transform.rotation;
+            //projClone.GetComponent<arrowProjectileScript>().target = target;
+            //projClone.GetComponent<arrowProjectileScript>().launched = true;
+            projClone.SetActive(true);
+            projClone.GetComponent<Rigidbody>().AddForce(0,15.0f,0,ForceMode.Impulse);
+            lastShot = Time.time;
+        }
     }
 
     void OnMouseOver(){
