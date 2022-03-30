@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class towerRange : MonoBehaviour
+public class movingTowerRange : MonoBehaviour
 {
     public List<GameObject> inRange = new List<GameObject>();
     public GameObject turretTop;
