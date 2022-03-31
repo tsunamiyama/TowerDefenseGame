@@ -8,6 +8,7 @@ public class mortarScript : MonoBehaviour
     public GameObject rangeIndicator;
     public GameObject parentBlock;
     public GameObject projectile;
+    public GameObject particleSystem;
     public float fireRate;
     public float lastShot;
     public float damage;
@@ -16,7 +17,7 @@ public class mortarScript : MonoBehaviour
     {
         rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
         projectile.SetActive(false);
-        fireRate = 3.0f;
+        fireRate = 4.5f;
         damage = 1.0f;
         lastShot = Time.time;
     }
@@ -30,16 +31,8 @@ public class mortarScript : MonoBehaviour
     public void shoot(GameObject target){
         if(Time.time > fireRate + lastShot){
             //Debug.Log("Fire");
-            GameObject projClone = Instantiate(projectile);
-            //projClone.GetComponent<arrowProjectileScript>().damage = this.damage;
-            projClone.transform.SetParent(projectile.transform.parent, false);
-            projClone.transform.position = projectile.transform.position;
-            projClone.transform.rotation = projectile.transform.rotation;
-            //projClone.GetComponent<arrowProjectileScript>().target = target;
-            //projClone.GetComponent<arrowProjectileScript>().launched = true;
-            projClone.SetActive(true);
-            projClone.GetComponent<Rigidbody>().AddForce(0,15.0f,0,ForceMode.Impulse);
             lastShot = Time.time;
+            StartCoroutine(launchProjectiles(target));
         }
     }
 
@@ -56,6 +49,24 @@ public class mortarScript : MonoBehaviour
         if(!EventSystem.current.IsPointerOverGameObject()){
             rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
             parentBlock.GetComponent<gridCube>().OnMouseExit();
+        }
+    }
+
+    IEnumerator launchProjectiles(GameObject target){
+        for(int i = 0; i < 5; i++){
+            GameObject projClone = Instantiate(projectile);
+            projClone.GetComponent<mortarProjectile>().damage = this.damage;
+            projClone.transform.SetParent(projectile.transform.parent, false);
+            projClone.transform.position = projectile.transform.position;
+            projClone.transform.localPosition = new Vector3(Random.Range(-2,2), projClone.transform.localPosition.y, Random.Range(-2,2));
+            projClone.transform.rotation = projectile.transform.rotation;
+            projClone.GetComponent<mortarProjectile>().target = target;
+            projClone.GetComponent<mortarProjectile>().setTarget(target);
+            projClone.SetActive(true);
+            projClone.GetComponent<Rigidbody>().AddForce(0,25.0f,0,ForceMode.Impulse);
+            particleSystem.GetComponent<ParticleSystem>().Play();
+            projClone.GetComponent<mortarProjectile>().launched = true;
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }
