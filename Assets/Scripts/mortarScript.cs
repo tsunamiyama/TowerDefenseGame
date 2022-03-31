@@ -55,12 +55,13 @@ public class mortarScript : MonoBehaviour
     IEnumerator launchProjectiles(GameObject target){
         for(int i = 0; i < 5; i++){
             GameObject projClone = Instantiate(projectile);
-            //projClone.GetComponent<arrowProjectileScript>().damage = this.damage;
+            projClone.GetComponent<mortarProjectile>().damage = this.damage;
             projClone.transform.SetParent(projectile.transform.parent, false);
             projClone.transform.position = projectile.transform.position;
             projClone.transform.localPosition = new Vector3(Random.Range(-2,2), projClone.transform.localPosition.y, Random.Range(-2,2));
             projClone.transform.rotation = projectile.transform.rotation;
             projClone.GetComponent<mortarProjectile>().target = target;
+            projClone.GetComponent<mortarProjectile>().setTarget(target);
             projClone.SetActive(true);
             projClone.GetComponent<Rigidbody>().AddForce(0,25.0f,0,ForceMode.Impulse);
             particleSystem.GetComponent<ParticleSystem>().Play();

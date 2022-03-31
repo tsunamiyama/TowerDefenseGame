@@ -25,7 +25,9 @@ public class staticTowerRange : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        inRange.Add(other.gameObject);
+        if(other.gameObject.tag == "Monster"){
+            inRange.Add(other.gameObject);
+        }
         for(int i = 0; i < inRange.Count-1; i++){
             if(inRange[i] == null){
                 inRange.RemoveAt(i);

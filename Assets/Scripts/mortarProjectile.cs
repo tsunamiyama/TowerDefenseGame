@@ -24,9 +24,7 @@ public class mortarProjectile : MonoBehaviour
     {
         if(launched && gameObject.GetComponent<Rigidbody>().velocity.y < 0){
             if(!targetSet){
-                if(target == null){
-                    targetPos = new Vector3(0,0,0);
-                }else {
+                if(target != null){
                     setTarget(target);
                 }
                 targetSet = true;
@@ -39,8 +37,11 @@ public class mortarProjectile : MonoBehaviour
             launched = false;
             gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
             arrowModel.GetComponent<MeshRenderer>().enabled = false;
+            
             if(!explosionPlay){
                 ps.GetComponent<ParticleSystem>().Play();
+                ps.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
+                ps.GetComponent<SphereCollider>().enabled = true;
                 explosionPlay = true;
             }
             if(ps == null){
