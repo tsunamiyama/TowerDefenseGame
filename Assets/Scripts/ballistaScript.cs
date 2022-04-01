@@ -17,32 +17,32 @@ public class ballistaScript : MonoBehaviour
     void Start()
     {
         rangeIndicator.GetComponent<MeshRenderer>().enabled = false;
-        arrow.SetActive(false);
+
         fireRate = 1.75f;
         lastShot = Time.time;
         damage = 1.0f;
+
+        arrow.SetActive(false);
+        arrow.GetComponent<arrowProjectileScript>().damage = this.damage;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(rangeIndicator.GetComponent<movingTowerRange>().inRange.Count > 0){
+            if(Time.time > fireRate + lastShot){
+                shoot(rangeIndicator.GetComponent<movingTowerRange>().inRange[0]);
+            }
+        }
     }
 
     public void shoot(GameObject target){
-        if(Time.time > fireRate + lastShot){
-            //Debug.Log("Fire");
-            GameObject arrowClone = Instantiate(arrow);
-            arrowClone.GetComponent<arrowProjectileScript>().damage = this.damage;
-            arrowClone.transform.SetParent(arrow.transform.parent, false);
-            arrowClone.transform.position = arrow.transform.position;
-            arrowClone.transform.rotation = arrow.transform.rotation;
-            arrowClone.GetComponent<arrowProjectileScript>().target = target;
-            arrowClone.GetComponent<arrowProjectileScript>().launched = true;
-            arrowClone.SetActive(true);
+        //Debug.Log("Fire");
+        arrow.SetActive(true);
+        arrow.GetComponent<arrowProjectileScript>().target = target;
+        arrow.GetComponent<arrowProjectileScript>().launched = true;
             
-            lastShot = Time.time;
-        }
+        lastShot = Time.time;
     }
 
     void OnMouseOver(){

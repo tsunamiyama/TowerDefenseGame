@@ -7910,11 +7910,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27566b95d6b23d4ab5127b733d50a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launched: 0
   target: {fileID: 0}
+  tower: {fileID: 1154339580}
+  launched: 0
+  damageDone: 0
   arrowSpeed: 12
   damage: 1
-  damageDone: 0
 --- !u!1001 &610053158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10496,7 +10497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  money: 0
+  money: 1000
   hpText: {fileID: 32892530}
   moneyText: {fileID: 666912839}
 --- !u!1001 &1084819036

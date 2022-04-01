@@ -21,7 +21,6 @@ public class movingTowerRange : MonoBehaviour
         } else if(inRange.Count > 0){
             inRange.Remove(null);
             turretTop.transform.LookAt(inRange[0].transform);
-            tower.GetComponent<ballistaScript>().shoot(inRange[0]);
         }
 
     }
