@@ -23,7 +23,6 @@ public class dragCamera : MonoBehaviour
             // Pinch to zoom
             if (Input.touchCount == 2)
             {
-
                 // get current touch positions
                 Touch tZero = Input.GetTouch(0);
                 Touch tOne = Input.GetTouch(1);
@@ -37,6 +36,14 @@ public class dragCamera : MonoBehaviour
                 // get offset value
                 float deltaDistance = oldTouchDistance - currentTouchDistance;
                 Zoom (deltaDistance, TouchZoomSpeed);
+            } else if(Input.touchCount == 1){
+                Touch dragTouch = Input.GetTouch(0);
+                float speed = 0.5f*Time.deltaTime;
+                Vector3 inputDir = new Vector3(dragTouch.deltaPosition.x*speed, 0, dragTouch.deltaPosition.y*speed);
+                inputDir = mainCam.transform.TransformDirection(inputDir);
+                inputDir.y = 0;
+                //inputDir.Normalize();
+                mainCam.transform.position -= inputDir;
             }
         }
         else
@@ -50,15 +57,6 @@ public class dragCamera : MonoBehaviour
             mainCam.fieldOfView = 0.1f;
         } else if(mainCam.fieldOfView > ZoomMaxBound) {
             mainCam.fieldOfView = 179.9f;
-        }
-
-        if(Input.GetMouseButton(0)){
-            float speed = 5*Time.deltaTime;
-            Vector3 inputDir = new Vector3(Input.GetAxis("Mouse X")*speed, 0, Input.GetAxis("Mouse Y")*speed);
-            inputDir = mainCam.transform.TransformDirection(inputDir);
-            inputDir.y = 0;
-            //inputDir.Normalize();
-            mainCam.transform.position -= inputDir;
         }
     }
 
